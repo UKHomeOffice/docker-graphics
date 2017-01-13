@@ -1,5 +1,8 @@
 # docker-graphics
 
+[![Docker Repository on Quay](https://quay.io/repository/ukhomeofficedigital/docker-graphics/status "Docker Repository on Quay")](https://quay.io/repository/ukhomeofficedigital/docker-graphics)
+[![Build Status](https://drone.digital.homeoffice.gov.uk/api/badges/UKHomeOffice/docker-graphics/status.svg)](https://drone.digital.homeoffice.gov.uk/UKHomeOffice/docker-graphics)
+
 ## What is this software and what does it do
 The software in this image is used to generate png files from graphviz dot files and from plantuml puml files.
 
