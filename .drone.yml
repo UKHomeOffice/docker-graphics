@@ -26,8 +26,8 @@ pipeline:
       - RUN_ENVIRONMENT=ci
     commands:
       - docker login -u="ukhomeofficedigital+drone_docker_graphics" -p=${DOCKER_TOKEN} quay.io
-      - docker tag testcontainer quay.io/ukhomeofficedigital/docker-graphics:latest
-      - docker tag testcontainer quay.io/ukhomeofficedigital/docker-graphics:${DRONE_COMMIT_SHA:0:7}
+      - docker tag docker-graphics quay.io/ukhomeofficedigital/docker-graphics:latest
+      - docker tag docker-graphics quay.io/ukhomeofficedigital/docker-graphics:${DRONE_COMMIT_SHA:0:7}
       - docker push quay.io/ukhomeofficedigital/docker-graphics:latest
       - docker push quay.io/ukhomeofficedigital/docker-graphics:${DRONE_COMMIT_SHA:0:7}
     when:
@@ -40,7 +40,7 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+drone_docker_graphics" -p=${DOCKER_TOKEN} quay.io
-      - docker tag testcontainer quay.io/ukhomeofficedigital/docker-graphics:${DRONE_TAG}
+      - docker tag docker-graphics quay.io/ukhomeofficedigital/docker-graphics:${DRONE_TAG}
       - docker push quay.io/ukhomeofficedigital/docker-graphics:${DRONE_TAG}
     when:
       event: [tag]
