@@ -45,10 +45,10 @@ pipeline:
 #       when:
 #         event: [tag]
 #
-# services:
-#   dind:
-#     image: docker:1.12-dind
-#     privileged: true
-#     command:
-#       - "-s"
-#       - "overlay"
+services:
+  dind:
+    image: docker:1.12-dind
+    privileged: true
+    command:
+      - "-s"
+      - "overlay"
