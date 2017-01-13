@@ -7,7 +7,7 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - RUN_ENVIRONMENT=ci
     commands:
-      - apk --update add git make bash
+      - apk --update add make bash
       - make build_image
 
   test_image:
@@ -16,9 +16,8 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - RUN_ENVIRONMENT=ci
     commands:
-      - apk --update add git make bash
+      - apk --update add make bash
       - make test_image
-      - docker images
 
   latest_image_to_quay:
     image: docker:1.12

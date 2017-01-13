@@ -14,6 +14,7 @@ RUN \
   apk del --purge wget ca-certificates
 
 
+RUN apk --update add bash make
 RUN apk --update add graphviz openjdk8 ttf-dejavu
 
 # add non-root user
