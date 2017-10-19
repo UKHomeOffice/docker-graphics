@@ -2,15 +2,13 @@ FROM alpine:3.5
 
 MAINTAINER stefan.cocora@gmail.com
 
-ARG PLANTUML_VERSION
 ARG CONTAINER_NONPRIVILEDGED_USER
 
-ENV PLANTUML_VER=$PLANTUML_VERSION \
-    USER=$CONTAINER_NONPRIVILEDGED_USER
+ENV USER=$CONTAINER_NONPRIVILEDGED_USER
 
 RUN \
   apk add --no-cache wget ca-certificates && \
-  wget "https://downloads.sourceforge.net/project/plantuml/plantuml.${PLANTUML_VERSION}.jar" -O plantuml.jar && \
+  wget "https://downloads.sourceforge.net/project/plantuml/plantuml.jar" && \
   apk del --purge wget ca-certificates
 
 

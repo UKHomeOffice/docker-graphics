@@ -2,53 +2,49 @@
 pipeline:
 
   build_image:
-    image: docker:1.12
+    image: docker:17.09.0-ce
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - RUN_ENVIRONMENT=ci
     commands:
       - apk --update add make bash
       - make build_image
 
   test_image:
-    image: docker:1.12
+    image: docker:17.09.0-ce
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - RUN_ENVIRONMENT=ci
     commands:
       - apk --update add make bash
       - make test_image
 
   latest_image_to_quay:
-    image: docker:1.12
+    image: docker:17.09.0-ce
+    secrets:
+      - docker_token
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
       - RUN_ENVIRONMENT=ci
     commands:
-      - docker login -u="ukhomeofficedigital+drone_docker_graphics" -p=${DOCKER_TOKEN} quay.io
+      - docker login -u="ukhomeofficedigital+drone_docker_graphics" -p=$${DOCKER_TOKEN} quay.io
       - docker tag docker-graphics quay.io/ukhomeofficedigital/docker-graphics:latest
-      - docker tag docker-graphics quay.io/ukhomeofficedigital/docker-graphics:${DRONE_COMMIT_SHA:0:7}
+      - docker tag docker-graphics quay.io/ukhomeofficedigital/docker-graphics:$${DRONE_COMMIT_SHA:0:7}
       - docker push quay.io/ukhomeofficedigital/docker-graphics:latest
-      - docker push quay.io/ukhomeofficedigital/docker-graphics:${DRONE_COMMIT_SHA:0:7}
+      - docker push quay.io/ukhomeofficedigital/docker-graphics:$${DRONE_COMMIT_SHA:0:7}
     when:
       event: [push]
       branch: master
 
   tag_image_to_quay:
-    image: docker:1.12
+    image: docker:17.09.0-ce
+    secrets:
+      - docker_token
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - docker login -u="ukhomeofficedigital+drone_docker_graphics" -p=${DOCKER_TOKEN} quay.io
-      - docker tag docker-graphics quay.io/ukhomeofficedigital/docker-graphics:${DRONE_TAG}
-      - docker push quay.io/ukhomeofficedigital/docker-graphics:${DRONE_TAG}
+      - docker login -u="ukhomeofficedigital+drone_docker_graphics" -p=$${DOCKER_TOKEN} quay.io
+      - docker tag docker-graphics quay.io/ukhomeofficedigital/docker-graphics:$${DRONE_TAG}
+      - docker push quay.io/ukhomeofficedigital/docker-graphics:$${DRONE_TAG}
     when:
       event: [tag]
-
-services:
-  dind:
-    image: docker:1.12-dind
-    privileged: true
-    command:
-      - "-s"
-      - "overlay"

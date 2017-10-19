@@ -37,7 +37,7 @@ help:
 	@echo ""
 
 build_image :
-	docker build -t $(CONTAINER_IMAGE) --build-arg PLANTUML_VERSION=$(PLANTUML_VERSION) --build-arg CONTAINER_NONPRIVILEDGED_USER=$(CONTAINER_NONPRIVILEDGED_USER) .
+	docker build -t $(CONTAINER_IMAGE) --build-arg CONTAINER_NONPRIVILEDGED_USER=$(CONTAINER_NONPRIVILEDGED_USER) .
 
 test_image :
 	docker run --rm --name $(CONTAINER_NAME) -v $(CURDIR)/tests:$(CONTAINER_NONPRIVILEDGED_USER_HOMEDIR)/tests docker-graphics dot -v -Tpng -o $(CONTAINER_NONPRIVILEDGED_USER_HOMEDIR)/test.png $(CONTAINER_NONPRIVILEDGED_USER_HOMEDIR)/tests/test.dot
